@@ -14,6 +14,25 @@ Autonoomne silindrikujulise litofaanvalgusti juhtseade, mis kasutab **NodeMCU ES
 - Seadistuste salvestamine LittleFS-i kolme sekundi möödumisel viimasest muudatusest.
 - LED-ide eelvaadet veebilehel ei ole.
 
+## Kasutajaliidese näited
+
+Ekraanipildid on tehtud selle hoidla firmware’i sisseehitatud veebiliidesest kohalikus brauserieelvaates. Eelvaade kasutab näidisolekut ega juhi füüsilist lampi. Pildi avamiseks täissuuruses klõpsa sellel.
+
+| Staatiline valgus | Vertikaalne valguslaine | Tuleleek |
+| --- | --- | --- |
+| [<img src="docs/media/ui-static.jpg" width="230" alt="Staatilise valguse seadistused koos 24 värvivalikuga">](docs/media/ui-static.jpg) | [<img src="docs/media/ui-wave.jpg" width="230" alt="Vertikaalse laine värvi, heleduse, kiiruse ja tugevuse juhtnupud">](docs/media/ui-wave.jpg) | [<img src="docs/media/ui-fire.jpg" width="230" alt="Tuleleegi heleduse, kiiruse ja tugevuse juhtnupud">](docs/media/ui-fire.jpg) |
+
+## Efektide näitevideod
+
+Kasutaja filmitud 40 LED-iga prototüüp 2026-10-31. Videod on nummerdatud algfailide ajalises järjekorras; täpseid efektirežiime ei ole määratud. All on kuni kuuesekundilised korduvad eelvaated. **Täispika MP4-video avamiseks klõpsa eelvaatel või videolingil.**
+
+| Näide 1 | Näide 2 | Näide 3 | Näide 4 | Näide 5 |
+| --- | --- | --- | --- | --- |
+| [<img src="docs/media/effect-01.gif" width="140" alt="Efektinäite 1 liikuv eelvaade">](docs/media/effect-01.mp4) | [<img src="docs/media/effect-02.gif" width="140" alt="Efektinäite 2 liikuv eelvaade">](docs/media/effect-02.mp4) | [<img src="docs/media/effect-03.gif" width="140" alt="Efektinäite 3 liikuv eelvaade">](docs/media/effect-03.mp4) | [<img src="docs/media/effect-04.gif" width="140" alt="Efektinäite 4 liikuv eelvaade">](docs/media/effect-04.mp4) | [<img src="docs/media/effect-05.gif" width="140" alt="Efektinäite 5 liikuv eelvaade">](docs/media/effect-05.mp4) |
+| [Video 1 · 10,5 s](docs/media/effect-01.mp4) | [Video 2 · 9,6 s](docs/media/effect-02.mp4) | [Video 3 · 18,1 s](docs/media/effect-03.mp4) | [Video 4 · 8,6 s](docs/media/effect-04.mp4) | [Video 5 · 11,5 s](docs/media/effect-05.mp4) |
+
+MP4-koopiad on helita ja veebisõbralikus vormingus; algvideote kestus on säilitatud. Kui GitHub ei ava pleierit, kasuta videofaili lehel allalaadimisnuppu. [Meedia päritolu ja töötlus](docs/MEDIA.md).
+
 ## Riistvara ja ühendused
 
 ### Praegune prototüüp
