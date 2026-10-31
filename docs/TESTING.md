@@ -18,10 +18,13 @@
 
 ## Ohutus ja usaldusväärsus
 
+- [ ] Asendada kasutaja kinnitatud 4 × 1,5 V AA otsetoide ribale sobiva reguleeritud toitega enne koormuskatseid; tuvastada LED-riba täpne mudel ja lubatud pinge.
+- [ ] Tuvastada patareide keemia ning kontrollida patareikarbi ja juhtmete koormustaluvust.
+- [ ] Patareitoite kasutamisel kontrollida pingemuunduri väljundit värskete ja tühjenevate patareidega enne LED-riba ühendamist.
 - [ ] Mõõta toitepinge LED-riba alguses ja lõpus suurima kasutatava heleduse juures.
-- [ ] Kontrollida 5 V toiteallika temperatuuri ja voolu.
+- [ ] Kontrollida toiteallika, pingemuunduri, patareide, kontaktide ja juhtmete temperatuuri ning koormusvoolu.
 - [ ] Kontrollida, et ESP8266 3,3 V andmesignaal ei tekita juhuslikke sähvatusi.
-- [ ] Veenduda ühises GND ühenduses.
+- [ ] Veenduda patareitoite/regulaatori, LED-riba ja USB-toitega NodeMCU ühises GND ühenduses; patareipaki pluss ei tohi olla ühendatud NodeMCU toiterööbastega.
 - [ ] Testida Wi-Fi uuesti ühendamist ja võrgu puudumise teadet mobiiltelefonis.
 
 Riistvarakontrollid on kavandatud ja siin läbimata. 2026-10-31 läbiti NodeMCU kompileerimine ja neli veebiskripti automaatkontrolli; käsud ja piirangud on failides `BUILD.md` ning `REVIEW.md`.

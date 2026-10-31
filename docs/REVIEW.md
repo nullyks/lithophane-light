@@ -32,6 +32,20 @@ No formal penetration test or exhaustive dependency vulnerability audit was done
 
 ## Remaining findings
 
+**Hardware clarification after the initial review (2026-10-31):** the user confirms
+that the LED strip is powered directly from a 4 × 1.5 V AA battery holder, with no
+voltage regulator; NodeMCU is powered separately over USB. The previous 5 V supply
+description was a recommendation, not the actual prototype wiring. Common ground,
+battery chemistry and the exact LED revision remain unconfirmed.
+
+**High before further powered testing — possible LED overvoltage.** Four series
+1.5 V cells give 6 V nominal, not regulated 5 V. Direct connection may damage a
+5 V strip; fresh-cell voltage may be higher. Disconnect this supply pending LED
+identification and use a suitable regulated supply. Lower software brightness
+does not lower the supply voltage. Battery-holder current capability and runtime
+have not been measured. See the
+[Adafruit power guide](https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels).
+
 1. **High before deployment — shared Wi-Fi password and no application authentication.**
    `AP_PASSWORD` remains the supplied example to keep setup reproducible. Customize
    it locally. Every AP client remains trusted to control the light; HTTP is plaintext.
@@ -45,8 +59,9 @@ No formal penetration test or exhaustive dependency vulnerability audit was done
 3. **Medium — hardware and thermal behavior unverified.** No software current limit
    is enforced. The theoretical 40-LED full-white load is about 2.4 A at 5 V; actual
    strip variants differ. Validate supply/wiring, heat inside the printed enclosure,
-   common ground, level shifting and power integrity. The existing 3–4 A supply
-   guidance is not a measured electrical certification.
+   common ground, level shifting and power integrity. The 3–4 A regulated supply
+   guidance is a recommendation, not the actual AA supply or a measured electrical
+   certification.
 4. **Low — effect discontinuities.** Changed settings reset `phase`; its later
    wrap at 2000 can also cause jumps because effects have different periods.
    These are visual limitations, not compile failures.

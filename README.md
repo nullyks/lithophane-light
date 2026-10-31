@@ -16,15 +16,27 @@ Autonoomne silindrikujulise litofaanvalgusti juhtseade, mis kasutab **NodeMCU ES
 
 ## Riistvara ja ühendused
 
+### Praegune prototüüp
+
+Kasutaja kinnitatud ühendus (2026-10-31): LED-riba saab toite **4 × 1,5 V AA patareikarbist otse, ilma pingeregulaatorita**. NodeMCU saab eraldi toite USB-juhtme kaudu. Ühise GND olemasolu ei ole veel kinnitatud.
+
+**Tähelepanu:** nelja jadamisi ühendatud 1,5 V patarei nimipinge on 6 V. See ei ole reguleeritud 5 V toide ning võib 5 V WS2812B-riba kahjustada. Värskete patareide pinge võib olla nimipingest kõrgem. Ära kasuta seda otseühendust enne konkreetse LED-riba lubatud toitepinge kontrollimist; kasuta ribale sobivat reguleeritud 5 V toidet. Tarkvaraline heleduse vähendamine ei vähenda riba toitepinget.
+
+[Adafruiti NeoPixeli toitejuhend](https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels) hoiatab nelja leelispatarei 6 V otseühenduse eest. Täpne LED-versioon ja patareide keemia on veel tuvastamata.
+
+### Soovitatav ühendus reguleeritud 5 V toitega
+
 | Ühendus | Selgitus |
 | --- | --- |
 | NodeMCU D2 (GPIO4) | WS2812B esimese LED-i DIN |
-| LED-riba +5 V | Välise 5 V toiteallika positiivne väljund |
+| LED-riba +5 V | Reguleeritud 5 V toiteallika positiivne väljund; mitte 4 × 1,5 V karbi otseväljund |
 | LED-riba GND | Välise toiteallika GND |
 | NodeMCU GND | Ühine maa LED-riba GND-ga |
 | NodeMCU USB | NodeMCU toide sobivast USB 5 V allikast |
 
 LED-riba tuleb toita eraldi **5 V / vähemalt 3 A** allikast; soovitatav on 4 A varu. 40 RGB LED-i maksimaalne teoreetiline vool on ligikaudu 2,4 A, kui kõik kanalid on täielikult sees. Ärge toitke riba NodeMCU 3,3 V väljundist.
+
+Patareitoite säilitamisel peab pingemuundur sobima patareipaki kogu kasutatava pingevahemiku ning LED-riba koormusega. Lihtne pinget alandav muundur ei pruugi patareide tühjenedes enam 5 V hoida. AA-patareide, patareikarbi ja juhtmete sobivus vajab mõõtmist; tööaega pole hinnatud. NodeMCU jääb USB-toitele: ühenda toiteallikate GND-d, kuid ära ühenda patareipaki plussi NodeMCU USB/5 V/3,3 V toiterööbastega.
 
 Praegune prototüüp ei kasuta nivoomuundurit ega silumiskondensaatorit. See on kompromiss: 3,3 V andmesignaal ei pruugi 5 V LED-ribaga alati stabiilselt töötada. Töökindluse parandamiseks on soovitatavad 74AHCT125/74HCT245 nivoomuundur, 330–470 Ω andmetakisti ning toitesisendi silumiskondensaator; prototüüp ei eelda nende olemasolu.
 
