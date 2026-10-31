@@ -35,8 +35,9 @@ No formal penetration test or exhaustive dependency vulnerability audit was done
 **Hardware clarification after the initial review (2026-10-31):** the user confirms
 that the LED strip is powered directly from a 4 × 1.5 V AA battery holder, with no
 voltage regulator; NodeMCU is powered separately over USB. The previous 5 V supply
-description was a recommendation, not the actual prototype wiring. Common ground,
-battery chemistry and the exact LED revision remain unconfirmed.
+description was a recommendation, not the actual prototype wiring. The user also
+confirms a common ground between the battery supply, LED strip and NodeMCU.
+Battery chemistry and the exact LED revision remain unconfirmed.
 
 **High before further powered testing — possible LED overvoltage.** Four series
 1.5 V cells give 6 V nominal, not regulated 5 V. Direct connection may damage a

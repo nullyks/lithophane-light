@@ -18,7 +18,7 @@ Autonoomne silindrikujulise litofaanvalgusti juhtseade, mis kasutab **NodeMCU ES
 
 ### Praegune prototüüp
 
-Kasutaja kinnitatud ühendus (2026-10-31): LED-riba saab toite **4 × 1,5 V AA patareikarbist otse, ilma pingeregulaatorita**. NodeMCU saab eraldi toite USB-juhtme kaudu. Ühise GND olemasolu ei ole veel kinnitatud.
+Kasutaja kinnitatud ühendus (2026-10-31): LED-riba saab toite **4 × 1,5 V AA patareikarbist otse, ilma pingeregulaatorita**. NodeMCU saab eraldi toite USB-juhtme kaudu. Patareikarbi miinus, LED-riba GND ja NodeMCU GND on kasutaja kinnitusel omavahel ühendatud.
 
 **Tähelepanu:** nelja jadamisi ühendatud 1,5 V patarei nimipinge on 6 V. See ei ole reguleeritud 5 V toide ning võib 5 V WS2812B-riba kahjustada. Värskete patareide pinge võib olla nimipingest kõrgem. Ära kasuta seda otseühendust enne konkreetse LED-riba lubatud toitepinge kontrollimist; kasuta ribale sobivat reguleeritud 5 V toidet. Tarkvaraline heleduse vähendamine ei vähenda riba toitepinget.
 

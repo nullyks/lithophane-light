@@ -24,7 +24,8 @@
 - [ ] Mõõta toitepinge LED-riba alguses ja lõpus suurima kasutatava heleduse juures.
 - [ ] Kontrollida toiteallika, pingemuunduri, patareide, kontaktide ja juhtmete temperatuuri ning koormusvoolu.
 - [ ] Kontrollida, et ESP8266 3,3 V andmesignaal ei tekita juhuslikke sähvatusi.
-- [ ] Veenduda patareitoite/regulaatori, LED-riba ja USB-toitega NodeMCU ühises GND ühenduses; patareipaki pluss ei tohi olla ühendatud NodeMCU toiterööbastega.
+- [x] Patareikarbi miinus, LED-riba GND ja USB-toitega NodeMCU GND on ühised (kasutaja kinnitus; siin eraldi mõõtmata).
+- [ ] Kontrollida, et patareipaki pluss ei ole ühendatud NodeMCU toiterööbastega; pingemuunduri lisamisel säilitada ühine GND.
 - [ ] Testida Wi-Fi uuesti ühendamist ja võrgu puudumise teadet mobiiltelefonis.
 
 Riistvarakontrollid on kavandatud ja siin läbimata. 2026-10-31 läbiti NodeMCU kompileerimine ja neli veebiskripti automaatkontrolli; käsud ja piirangud on failides `BUILD.md` ning `REVIEW.md`.
