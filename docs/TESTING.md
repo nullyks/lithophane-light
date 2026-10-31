@@ -24,4 +24,17 @@
 - [ ] Veenduda ühises GND ühenduses.
 - [ ] Testida Wi-Fi uuesti ühendamist ja võrgu puudumise teadet mobiiltelefonis.
 
-Testid on kavandatud; siin pole neid automaatselt ega füüsilisel seadmel läbi viidud.
+Riistvarakontrollid on kavandatud ja siin läbimata. 2026-10-31 läbiti NodeMCU kompileerimine ja neli veebiskripti automaatkontrolli; käsud ja piirangud on failides `BUILD.md` ning `REVIEW.md`.
+
+## HTTP regressioonikontrollid seadmel (veel läbimata)
+
+- [ ] `GET /set?power=0` annab 405 ja olek ei muutu.
+- [ ] `POST /set` ilma kontrollpäiseta annab 403.
+- [ ] POST vale Host-päisega annab 403.
+- [ ] Korrektsed POST-väärtused piiridel (mode 0/5, brightness 0/255, speed 1/100, strength 0/100, power 0/1, color 000000/FFFFFF) rakenduvad.
+- [ ] Tühjad, negatiivsed, ülemäärased, teksti sisaldavad või osaliselt numbrilised väärtused annavad 400.
+- [ ] `mode=3&brightness=oops` ei muuda kumbagi väärtust.
+- [ ] `color=GGGGGG`, `color=123` ja `power=true` annavad 400.
+- [ ] Sama oleku korduv saatmine ei taaskäivita animatsiooni ega tekita uut salvestust.
+- [ ] Väliselt veebilehelt vormi/fetch kaudu kirjutamine ei õnnestu.
+- [ ] Toitekatkestus salvestamisel: dokumenteerida faili taastumine/vaikimisi väärtused; praegune kirjutus ei ole atomaarne.

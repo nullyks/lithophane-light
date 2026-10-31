@@ -6,7 +6,7 @@ Kogu programm on ühes Arduino `.ino` failis. `setup()` käivitab LED-riba, Litt
 
 ## Veebiliides
 
-HTML/CSS/JavaScript asuvad `PAGE` PROGMEM stringis; ei vaja internetti ega CDN-e. JavaScript loeb `/state` ja muudab seadeid `/set` kaudu. Liugurite muudatused koondatakse 140 ms viivitusega. Värvipalett koosneb 24 HTML-nupust, mis määravad tavapärase värvivaliku (`input type=color`) väärtuse. LED-ide visuaalset eelvaadet pole.
+HTML/CSS/JavaScript asuvad `PAGE` PROGMEM stringis; ei vaja internetti ega CDN-e. JavaScript loeb `/state` ja muudab seadeid `/set` kaudu. Liugurite muudatused koondatakse 140 ms viivitusega. Muudatused saadetakse POST-päringuga ja kontrollpäisega ükshaaval; ootel muudatused koondatakse viimaseks olekuks. Juhtnupud aktiveeritakse pärast algse oleku edukat lugemist. API kontrollib väärtusi enne kogu muudatuse rakendamist. Värvipalett koosneb 24 HTML-nupust, mis määravad tavapärase värvivaliku (`input type=color`) väärtuse. LED-ide visuaalset eelvaadet pole.
 
 ## Animatsioonid
 
@@ -21,7 +21,7 @@ HTML/CSS/JavaScript asuvad `PAGE` PROGMEM stringis; ei vaja internetti ega CDN-e
 
 ## Võimalikud täiustused
 
-1. Lisada seadistustele versioon ja kontrollsumma või atomaarne failikirjutus, et katkestatud salvestus ei jätaks vigast faili.
+1. Seadistusfail on juba versiooniga 2. Lisada kontrollsumma ja atomaarne failikirjutus, et katkestatud salvestus ei jätaks vigast faili.
 2. Viia HTML eraldi LittleFS-failidesse, kui kasutajaliides kasvab.
 3. Lisada kasutajaliidesesse valgustuse vaikimisi käivitumisolek ja efektipõhised tugevuse vahemikud.
 4. Lisada voolupiirang täisheleduse jaoks.

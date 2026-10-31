@@ -30,8 +30,8 @@ Praegune prototüüp ei kasuta nivoomuundurit ega silumiskondensaatorit. See on 
 
 ## Paigaldamine
 
-1. Paigalda Arduino IDE ja **ESP8266 by ESP8266 Community** plaadipakett.
-2. Paigalda Library Managerist **Adafruit NeoPixel**.
+1. Paigalda Arduino IDE ja **ESP8266 by ESP8266 Community 3.1.2** plaadipakett. Lisa plaadihalduri URL: `https://arduino.esp8266.com/stable/package_esp8266com_index.json`.
+2. Paigalda Library Managerist **Adafruit NeoPixel 1.15.5**.
 3. Ava `Lithophane_Light/Lithophane_Light.ino`.
 4. Vali plaat **NodeMCU 1.0 (ESP-12E Module)**, vali õige jadaport ning laadi kood üles.
 5. Ühenda LED-riba vastavalt ülaltoodud tabelile ja käivita seade.
@@ -59,9 +59,17 @@ Seade salvestab režiimi, heleduse, kiiruse, tugevuse, värvi ja sisse-/väljal�
 
 - `GET /` – kasutajaliides.
 - `GET /state` – praegused väärtused JSON-ina.
-- `GET /set?mode=2&brightness=120&speed=50&strength=75&color=FFE0B0&power=1` – seadistuste muutmine (parameetrid on valikulised).
+- `POST /set` – seadistuste muutmine, `application/x-www-form-urlencoded` kehas (parameetrid on valikulised).
+- Nõutav päis: `X-Lithophane-Control: 1`. Kasuta hosti `192.168.4.1` (valikuliselt `:80`). `GET /set` tagastab 405.
+- Vahemikud: `mode` 0–5, `brightness` 0–255, `speed` 1–100, `strength` 0–100, `power` 0 või 1, `color` täpselt kuus kuueteistkümnendmärki ilma `#` märgita. Vigane väärtus annab HTTP 400 ja kogu muudatus jäetakse rakendamata.
 
-Võrk kasutab WPA2 parooli, kuid HTTP juhtimine ise pole autentitud. Kõik pääsupunktiga ühendunud saavad valgustust juhtida. Muuda parool enne avalikku kasutamist. Ära ühenda seda lahendust otse internetti.
+Näide (Windowsis kasuta vajadusel `curl.exe`):
+
+```sh
+curl -X POST http://192.168.4.1/set -H "X-Lithophane-Control: 1" --data "mode=2&brightness=120&speed=50&strength=75&color=FFE0B0&power=1"
+```
+
+Võrk kasutab WPA2 parooli, kuid HTTP juhtimine ise pole autentitud. Kõik pääsupunktiga ühendunud saavad valgustust juhtida. Muuda lähtekoodi `AP_PASSWORD` väärtus enne kasutuselevõttu unikaalseks 8–63 märgi pikkuseks parooliks ja laadi firmware uuesti üles. Ära lisa oma tegelikku parooli Giti. POST ja kontrollpäis kaitsevad tavaliste võõralt veebilehelt saadetud päringute eest, kuid ei tuvasta kasutajat. Ära ühenda seda lahendust otse internetti.
 
 ## Arendus ja piirangud
 
@@ -77,7 +85,12 @@ Võrk kasutab WPA2 parooli, kuid HTTP juhtimine ise pole autentitud. Kõik pää
 - `README.md` – ülevaade ja kasutusjuhend.
 - `docs/DEVELOPMENT.md` – tarkvaraarhitektuur ja arendusmärkmed.
 - `docs/TESTING.md` – testimisjuhend.
-- `.gitignore` – lokaalsed Arduino väljundid.
+- `docs/REVIEW.md` – koodi-, turva- ja dokumentatsiooniülevaade koos allesjäänud riskidega.
+- `docs/BUILD.md` – korratav käsurea kompileerimine ja kontrollid.
+- `SECURITY.md` – turvamudel ja probleemidest teatamine.
+- `tests/web-ui.test.cjs` – veebiskripti automaatkontrollid.
+- `.github/workflows/firmware.yml` – kompileerimine ja veebiskripti testid GitHub Actionsis.
+- `.gitignore` – lokaalsed Arduino väljundid ja tööriistad.
 
 ## Litsents
 

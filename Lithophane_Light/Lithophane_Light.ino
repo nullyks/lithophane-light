@@ -8,7 +8,7 @@
 // NodeMCU ESP-12E, WS2812B 40 tk; D2 = GPIO4
 constexpr uint8_t LED_PIN = D2;
 constexpr uint16_t LED_COUNT = 40;
-// false: LED 0 all, LED 19 üleval; true: vastupidi
+// false: LED 0 all, LED LED_COUNT-1 üleval; true: vastupidi
 constexpr bool REVERSE_SPIRAL = false;
 const char* AP_SSID = "Lithophane-Light";
 const char* AP_PASSWORD = "lithophane123";
@@ -38,7 +38,7 @@ const char PAGE[] PROGMEM = R"HTML(<!DOCTYPE html>
 <html lang="et"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lithophane Light</title><style>
 *{box-sizing:border-box}body{background:#151922;color:#f5f5f5;font:16px system-ui,Arial;margin:0;padding:18px}
-main{max-width:460px;margin:auto}h1{font-size:25px;margin:0 0 6px}small{color:#adb5c5}
+main{max-width:460px;margin:auto}fieldset{border:0;padding:0;margin:0;min-width:0}h1{font-size:25px;margin:0 0 6px}small{color:#adb5c5}
 .panel{background:#242a36;border-radius:12px;padding:20px;margin:16px 0}
 label{display:block;margin-bottom:9px}.control{margin-top:22px}.head{display:flex;justify-content:space-between;gap:10px}
 output{color:#f3b75b}select,input[type=color]{width:100%;background:#343c4b;color:white;border:1px solid #566174;border-radius:8px;padding:10px;font-size:16px}
@@ -48,6 +48,7 @@ button{width:100%;padding:14px;color:white;background:#bb7826;border:0;border-ra
 .palette{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin-bottom:12px}.swatch{height:42px;padding:0;border:2px solid transparent;border-radius:8px;cursor:pointer}.swatch.active{border:3px solid #fff;outline:1px solid #000}.swatch:focus-visible{outline:3px solid #fff}
 </style></head><body><main>
 <h1>Lithophane Light</h1><small>NodeMCU ESP8266 · 40 NeoPixel</small>
+<fieldset id="controls" disabled>
 <div class="panel"><button id="power" onclick="togglePower()">Valgustus sees</button></div>
 <div class="panel">
 <label for="mode">Valgusrežiim</label><select id="mode" onchange="changed()">
@@ -64,9 +65,9 @@ button{width:100%;padding:14px;color:white;background:#bb7826;border:0;border-ra
 <input type="range" min="0" max="100" id="strength" oninput="changed()"></div>
 <p class="note">Heledus määrab üldise valguse tugevuse. Efekti tugevus määrab heleda ja tumeda faasi erinevuse.</p>
 </div>
-<p id="status">Ühendamine...</p>
+</fieldset><p id="status" role="status">Ühendamine...</p>
 </main><script>
-const $=x=>document.getElementById(x);let power=true,timer=null,seq=0;
+const $=x=>document.getElementById(x);let power=true,timer=null,seq=0,sending=false,pending=false;
 const paletteColors=['#ffb060','#ffd09a','#ffe4c4','#ffffff','#e0efff','#ff3838','#ff7540','#ff9500','#ffcc00','#fff34d','#b7f53f','#44e45e','#00b87b','#2cddbc','#00d7ef','#29a6ff','#2156ff','#1424a0','#7650ff','#ad53ed','#e44bdb','#ff60aa','#ff9bbd','#e7c5ff'];
 paletteColors.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Värv '+c);b.onclick=()=>{$('color').value=c;changed()};$('palette').appendChild(b)});
 function paint(){
@@ -79,11 +80,11 @@ function paint(){
  document.querySelectorAll('.swatch').forEach(el=>el.classList.toggle('active',el.title.toLowerCase()===$('color').value.toLowerCase()));
 }
 function changed(){paint();clearTimeout(timer);timer=setTimeout(send,140)}
-function send(){const n=++seq;const params=new URLSearchParams({mode:$('mode').value,brightness:$('brightness').value,speed:$('speed').value,strength:$('strength').value,color:$('color').value.slice(1),power:power?1:0});
- fetch('/set?'+params).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);if(n===seq)$('status').textContent='Seadistatud'}).catch(()=>{if(n===seq)$('status').textContent='Ühenduse viga'});
+function send(){if(sending){pending=true;return}sending=true;const n=++seq;const params=new URLSearchParams({mode:$('mode').value,brightness:$('brightness').value,speed:$('speed').value,strength:$('strength').value,color:$('color').value.slice(1),power:power?1:0});
+ fetch('/set',{method:'POST',headers:{'X-Lithophane-Control':'1'},body:params}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);if(n===seq)$('status').textContent='Seadistatud'}).catch(()=>{if(n===seq)$('status').textContent='Ühenduse viga'}).finally(()=>{sending=false;if(pending){pending=false;send()}});
 }
 function togglePower(){power=!power;changed()}
-fetch('/state').then(r=>{if(!r.ok)throw Error();return r.json()}).then(v=>{for(const x of ['mode','brightness','speed','strength'])$(x).value=v[x];$('color').value='#'+v.color;power=!!v.power;paint();$('status').textContent='Valmis'}).catch(()=>$('status').textContent='Seadistusi ei saanud lugeda');
+fetch('/state',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(v=>{for(const x of ['mode','brightness','speed','strength'])$(x).value=v[x];$('color').value='#'+v.color;power=!!v.power;paint();$('controls').disabled=false;$('status').textContent='Valmis'}).catch(()=>$('status').textContent='Seadistusi ei saanud lugeda. Laadi leht uuesti.');
 </script></body></html>)HTML";
 
 float clampf(float x, float a=0.f, float b=1.f){return x<a?a:(x>b?b:x);}
@@ -186,20 +187,53 @@ void loadSettings(){
 }
 String colorHex(uint32_t c){char b[7];snprintf(b,sizeof(b),"%06lX",(unsigned long)c);return String(b);}
 void state(){
+ server.sendHeader("Cache-Control","no-store");
  String json="{\"mode\":"+String(s.mode)+",\"brightness\":"+String(s.brightness)+",\"speed\":"+String(s.speed)+",\"strength\":"+String(s.strength)+",\"color\":\""+colorHex(s.color)+"\",\"power\":"+String(s.power?1:0)+"}";
  server.send(200,"application/json",json);
 }
-void handleSet(){
- if(server.hasArg("mode"))s.mode=constrain(server.arg("mode").toInt(),0,5);
- if(server.hasArg("brightness"))s.brightness=constrain(server.arg("brightness").toInt(),0,255);
- if(server.hasArg("speed"))s.speed=constrain(server.arg("speed").toInt(),1,100);
- if(server.hasArg("strength"))s.strength=constrain(server.arg("strength").toInt(),0,100);
- if(server.hasArg("color")){
-   String x=server.arg("color");bool valid=x.length()==6;
-   for(unsigned int i=0;i<x.length();i++)if(!isxdigit((unsigned char)x[i]))valid=false;
-   if(valid)s.color=strtoul(x.c_str(),nullptr,16);
+bool readNumber(const char* name,uint8_t& value,uint8_t low,uint8_t high){
+ if(!server.hasArg(name))return true;
+ String x=server.arg(name);
+ if(x.length()==0||x.length()>3)return false;
+ unsigned int n=0;
+ for(unsigned int i=0;i<x.length();i++){
+   if(x[i]<'0'||x[i]>'9')return false;
+   n=n*10+(x[i]-'0');
  }
- if(server.hasArg("power"))s.power=server.arg("power")=="1";
+ if(n<low||n>high)return false;
+ value=n;return true;
+}
+void handleSet(){
+ // A non-simple header prevents ordinary cross-origin forms/fetch from changing state.
+ // This is CSRF protection, not authentication. Do not enable permissive CORS.
+ if(server.header("X-Lithophane-Control")!="1"){
+   server.send(403,"text/plain","Missing control header");return;
+ }
+ String host=server.hostHeader();
+ String ip=WiFi.softAPIP().toString();
+ if(host!=ip&&host!=ip+":80"){
+   server.send(403,"text/plain","Invalid host");return;
+ }
+ Settings next=s;
+ bool valid=readNumber("mode",next.mode,0,5)
+   &&readNumber("brightness",next.brightness,0,255)
+   &&readNumber("speed",next.speed,1,100)
+   &&readNumber("strength",next.strength,0,100);
+ if(server.hasArg("color")){
+   String x=server.arg("color");bool colorValid=x.length()==6;
+   for(unsigned int i=0;i<x.length();i++)if(!isxdigit((unsigned char)x[i]))colorValid=false;
+   valid=valid&&colorValid;
+   if(colorValid)next.color=strtoul(x.c_str(),nullptr,16);
+ }
+ if(server.hasArg("power")){
+   String x=server.arg("power");valid=valid&&(x=="0"||x=="1");next.power=x=="1";
+ }
+ if(!valid){server.send(400,"text/plain","Invalid setting");return;}
+ if(next.mode==s.mode&&next.brightness==s.brightness&&next.speed==s.speed
+   &&next.strength==s.strength&&next.color==s.color&&next.power==s.power){
+   server.send(200,"text/plain","OK");return;
+ }
+ s=next;
  phase=0;lastChange=millis();savePending=true;immediateFrame=true;
  server.send(200,"text/plain","OK");
 }
@@ -210,7 +244,9 @@ void setup(){
  WiFi.persistent(false);WiFi.mode(WIFI_AP);WiFi.softAP(AP_SSID,AP_PASSWORD);
  server.on("/",HTTP_GET,[](){server.send_P(200,"text/html; charset=utf-8",PAGE);});
  server.on("/state",HTTP_GET,state);
- server.on("/set",HTTP_GET,handleSet);
+ server.collectHeaders("X-Lithophane-Control");
+ server.on("/set",HTTP_POST,handleSet);
+ server.on("/set",HTTP_GET,[](){server.sendHeader("Allow","POST");server.send(405,"text/plain","Use POST");});
  server.onNotFound([](){server.send(404,"text/plain","Not found");});
  server.begin();Serial.printf("SSID: %s | IP: %s\n",AP_SSID,WiFi.softAPIP().toString().c_str());
  lastFrame=millis();render(0.033f);immediateFrame=false;
