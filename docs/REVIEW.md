@@ -39,6 +39,12 @@ description was a recommendation, not the actual prototype wiring. The user also
 confirms a common ground between the battery supply, LED strip and NodeMCU.
 Battery chemistry and the exact LED revision remain unconfirmed.
 
+**User-reported functional test (2026-10-31):** the 40-LED prototype has been
+tested in its current configuration and works. The exact firmware revision, test
+duration, per-feature results and electrical measurements were not specified.
+This confirms basic operation of the reported setup; it does not establish that
+the reviewed GitHub firmware was flashed or that all checklist items passed.
+
 **High before further powered testing — possible LED overvoltage.** Four series
 1.5 V cells give 6 V nominal, not regulated 5 V. Direct connection may damage a
 5 V strip; fresh-cell voltage may be higher. Disconnect this supply pending LED
@@ -57,7 +63,7 @@ have not been measured. See the
    only confirms RAM acceptance. LittleFS uses the core's default auto-format-on-
    mount-failure behavior. A future change should use a temporary file/rename,
    stricter file parsing, explicit mount policy and surfaced save status.
-3. **Medium — hardware and thermal behavior unverified.** No software current limit
+3. **Medium — electrical and thermal limits unverified.** No software current limit
    is enforced. The theoretical 40-LED full-white load is about 2.4 A at 5 V; actual
    strip variants differ. Validate supply/wiring, heat inside the printed enclosure,
    common ground, level shifting and power integrity. The 3–4 A regulated supply
@@ -82,9 +88,11 @@ have not been measured. See the
 - Source reviewed for secrets: only the documented example AP password was found;
   no private keys or service tokens were identified. This is not a guarantee of
   complete secret detection.
-- No physical lamp, serial upload, on-device HTTP regressions, browser layout test,
-  power interruption test or thermal/current measurement was performed. Those
-  remain explicit checklist items in `TESTING.md`.
+- The user reports a successful functional test of the 40-LED prototype as noted
+  above. No physical lamp test or serial upload was performed by the reviewer.
+  On-device HTTP regressions, browser layout checks, power interruption behavior
+  and thermal/current measurements remain without separately reported results
+  in `TESTING.md`.
 
 Reference documentation: [Arduino CLI setup](https://docs.arduino.cc/arduino-cli/getting-started/),
 [ESP8266 core](https://github.com/esp8266/Arduino), and

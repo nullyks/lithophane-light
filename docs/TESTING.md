@@ -1,5 +1,11 @@
 # Testimisplaan
 
+## Kinnitatud töökatse
+
+- [x] Kasutaja kinnitas 2026-10-31, et 40 LED-iga prototüüp on praegusel kujul testitud ja töötab.
+- Toide: LED-riba otse 4 × 1,5 V AA patareikarbist, NodeMCU USB kaudu; ühine GND on kinnitatud.
+- Firmware täpne revisjon, katse kestus ja üksikute funktsioonide tulemused ei ole teada. Allolevad detailkontrollid jäävad avatuks kuni nende tulemuste eraldi kinnitamiseni.
+
 ## Esmased kontrollid
 
 - [ ] Sketch kompileerub NodeMCU 1.0 (ESP-12E Module) jaoks.
@@ -28,7 +34,7 @@
 - [ ] Kontrollida, et patareipaki pluss ei ole ühendatud NodeMCU toiterööbastega; pingemuunduri lisamisel säilitada ühine GND.
 - [ ] Testida Wi-Fi uuesti ühendamist ja võrgu puudumise teadet mobiiltelefonis.
 
-Riistvarakontrollid on kavandatud ja siin läbimata. 2026-10-31 läbiti NodeMCU kompileerimine ja neli veebiskripti automaatkontrolli; käsud ja piirangud on failides `BUILD.md` ning `REVIEW.md`.
+Üldine töökatse on kasutaja poolt kinnitatud. Märkimata detailkontrollide ja elektriliste mõõtmiste tulemusi pole eraldi kinnitatud. 2026-10-31 läbiti NodeMCU kompileerimine ja neli veebiskripti automaatkontrolli; käsud ja piirangud on failides `BUILD.md` ning `REVIEW.md`.
 
 ## HTTP regressioonikontrollid seadmel (veel läbimata)
 

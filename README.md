@@ -2,7 +2,7 @@
 
 Autonoomne silindrikujulise litofaanvalgusti juhtseade, mis kasutab **NodeMCU ESP8266 (ESP-12E)** ja **40 WS2812B RGB LED-i**. LED-riba on keritud spiraalina ümber ligikaudu 20 mm läbimõõduga toru. Seade loob oma Wi-Fi pääsupunkti ja pakub eestikeelset seadistuslehte. Internetiühendust pole tarvis.
 
-> Staatus: funktsionaalne prototüüp. Varasem 20 LED-iga versioon on kasutaja riistvaral üldjoontes töötanud. See 40 LED-i ja uuendatud veebiliidesega versioon ei ole riistvaral eraldi testitud.
+> Staatus: kasutaja kinnitusel on 40 LED-iga prototüüp praegusel kujul riistvaral testitud ja töötab (2026-10-31). Kasutusel on LED-ide otsene 4 × 1,5 V AA patareitoide, NodeMCU USB-toide ja ühine GND. Testitud firmware täpne revisjon, katse kestus ning üksikute funktsioonide ja elektriliste mõõtmiste tulemused ei ole dokumenteeritud; GitHubis tehtud tarkvaramuudatuste seadmel kontrollimist ei saa sellest eraldi järeldada.
 
 ## Funktsioonid
 
