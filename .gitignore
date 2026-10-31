@@ -1,0 +1,14 @@
+*.bin
+*.elf
+*.map
+*.hex
+build/
+.vscode/
+.DS_Store
+
+.tools/
+.env
+.env.*
+!.env.example
+__pycache__/
+
