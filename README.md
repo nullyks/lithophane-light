@@ -89,7 +89,7 @@ Võrk kasutab WPA2 parooli, kuid HTTP juhtimine ise pole autentitud. Kõik pää
 - 40 LED-i värvide eelvaadet ei kuvata: kasutaja näeb muudatust otse valgustis.
 - 40 LED-i korral sõltub vertikaalse laine visuaalne liikumine spiraali sammust ja LED-ide paigutusest.
 - RGB WS2812B ei tooda spektraalselt sama valget kui eraldi valged LED-id; fotolitofaanis võib parim tulemus olla soe staatiline valgus.
-- Seade kasutab ühekeermelist ESP8266 veebiserverit ja 30 kaadrit sekundis animatsiooni.
+- Seade kasutab ühelõimelist ESP8266 veebiserverit ja 30 kaadrit sekundis animatsiooni.
 
 ## Failid
 
